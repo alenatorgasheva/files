@@ -60,11 +60,15 @@ def runCommand(command):
 
 
 def moveUp():
-    pass
+    r_catalog = os.getcwd()[:os.getcwd().rfind('\\')]
+    os.chdir(r_catalog)
 
 
 def moveDown(currentDir):
-    pass
+    if os.path.exists(currentDir):
+        os.chdir(os.path.abspath(currentDir))
+    else:
+        print('error')
 
 
 # TODO (Алина)
@@ -83,7 +87,13 @@ def findFiles(target, path):
 
 
 def main():
-    MENU = ''
+    MENU = '-' * 43 + '\n' + '''|  1. Просмотр каталога                   |
+|  2. На уровень вверх                    |
+|  3. На уровень вниз                     |
+|  4. Количество файлов и каталогов       |  
+|  5. Размер текущего каталога (в байтах) |
+|  6. Поиск файла                         |
+|  7. Выход из программы                  |''' + '\n' + '-' * 43 + '\n' + 'Выберите пункт меню: '
     while True:
         print(os.getcwd())
         print(MENU)
