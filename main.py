@@ -28,7 +28,7 @@ def acceptCommand():
 
 def runCommand(command):
     if command == '1':
-        pass
+        print(os.listdir(os.getcwd()))
 
     elif command == '2':
         moveUp()
@@ -51,9 +51,8 @@ def runCommand(command):
     elif command == '6':
         print('Введите имя файла.')
         target = input()
-        print('Где искать?')
-        path = input()
-        print(findFiles(target, path))
+        path = os.getcwd()
+        findFiles(target, path)
 
     elif command == '7':
         pass
@@ -68,7 +67,8 @@ def moveDown(currentDir):
     if os.path.exists(currentDir):
         os.chdir(os.path.abspath(currentDir))
     else:
-        print('error')
+        print()
+        print('ERROR')
 
 
 # TODO (Алина)
@@ -83,7 +83,15 @@ def countBytes(path):
 
 # TODO (Алёна)
 def findFiles(target, path):
-    pass
+    for brunch in os.listdir(path):
+        if os.path.isfile(os.path.abspath(brunch)):
+            if brunch == target:
+                print(os.path.abspath(brunch))
+
+        elif os.path.isdir(os.path.abspath(brunch)):
+            moveDown(brunch)
+            findFiles(target, os.getcwd())
+            moveUp()
 
 
 def main():
@@ -95,10 +103,15 @@ def main():
 |  6. Поиск файла                         |
 |  7. Выход из программы                  |''' + '\n' + '-' * 43 + '\n' + 'Выберите пункт меню: '
     while True:
+        print()
         print(os.getcwd())
         print(MENU)
         command = acceptCommand()
         runCommand(command)
-        if command == QUIT:
+        if command == '7':
+            print()
             print('Работа программы завершена.')
             break
+
+
+main()
