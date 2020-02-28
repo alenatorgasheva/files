@@ -74,7 +74,7 @@ def moveUp():
     Function for making the parent directory current.
     :return: None
     """
-    root = os.getcwd()[:os.getcwd().rfind('\\')]
+    root = os.path.split(os.getcwd())[0]
     os.chdir(root)
 
 
