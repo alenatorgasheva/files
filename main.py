@@ -70,11 +70,20 @@ def runCommand(command):
 
 
 def moveUp():
-    r_catalog = os.getcwd()[:os.getcwd().rfind('\\')]
-    os.chdir(r_catalog)
+    """
+    Function for making the parent directory current.
+    :return: None
+    """
+    root = os.getcwd()[:os.getcwd().rfind('\\')]
+    os.chdir(root)
 
 
 def moveDown(currentDir):
+    """
+    Function for making the required directory current.
+    :param currentDir: a name of the subdirectory
+    :return: None
+    """
     if os.path.exists(currentDir):
         if os.path.isdir(os.path.abspath(currentDir)):
             os.chdir(os.path.abspath(currentDir))
@@ -85,11 +94,23 @@ def moveDown(currentDir):
 
 
 def countFiles(path):
+    """
+    Wrapper function.
+    :param path: a directory name
+    :return: number files and subdirectories
+    """
     moveUp()
     return files_list(path, [], [])
 
 
 def files_list(path, dirs, files):
+    """
+    Recursive function calculating the number of files and subdirectories in the required directory.
+    :param path: a directory name
+    :param dirs: list of all subdirectories in the current directory
+    :param files: list of all files in the current directory
+    :return: number files and subdirectories
+    """
     for file in os.listdir(path):
         path_1 = os.path.join(path, file)
         if os.path.isfile(path_1):
@@ -123,7 +144,7 @@ def findFiles(target, path, search):
 
         elif os.path.isdir(os.path.abspath(name)):
             moveDown(name)
-            findFiles(target, os.getcwd(), search)
+            search = findFiles(target, os.getcwd(), search)
             moveUp()
     return search
 
