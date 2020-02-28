@@ -86,15 +86,18 @@ def moveDown(currentDir):
 # TODO (Алина)
 def countFiles(path):
   moveUp()
-  return files_list(path, [])
-def files_list(path, lst):
+  return files_list(path, [], [])
+def files_list(path, lst, lst_files):
   for file in os.listdir(path):
     path_1 = os.path.join(path, file)
     if os.path.isfile(path_1):
-        lst.append(path_1)
+        lst_files.append(path_1)
     else:
-        files_list(path_1, lst)
-  return len(lst)
+      if path_1 not in lst:
+        lst.append(path_1)
+      files_list(path_1, lst, lst_files)
+  return 'Количество файлов: '+str(len(lst_files))+ '\nКоличество подкаталогов: '+str(len(lst)) +\
+         '\nВсего: '+str(len(lst)+len(lst_files))
 
 
 # TODO (Настя)
@@ -116,13 +119,14 @@ def findFiles(target, path):
 
 
 def main():
-    MENU = '-' * 43 + '\n' + '''|  1. Просмотр каталога                   |
-|  2. На уровень вверх                    |
-|  3. На уровень вниз                     |
-|  4. Количество файлов и каталогов       |  
-|  5. Размер текущего каталога (в байтах) |
-|  6. Поиск файла                         |
-|  7. Выход из программы                  |''' + '\n' + '-' * 43 + '\n' + 'Выберите пункт меню: '
+    MENU = '+' + '-' * 41 + '+' + '\n' + '''|  1. Просмотр каталога                   |
+    |  2. На уровень вверх                    |
+    |  3. На уровень вниз                     |
+    |  4. Количество файлов и каталогов       |  
+    |  5. Размер текущего каталога (в байтах) |
+    |  6. Поиск файла                         |
+    |  7. Выход из программы                  |''' + '\n' + '+' + '-' * 41 + '+' + '\n' + 'Выберите пункт меню: '
+
     while True:
         print()
         print(os.getcwd())
