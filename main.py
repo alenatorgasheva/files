@@ -28,6 +28,7 @@ def runCommand(command):
     :param command: command to run
     """
     if command == '1':
+        print()
         def list_files(startpath):
             for root, dirs, files in os.walk(startpath):
                 if dir != '.git':
@@ -49,18 +50,20 @@ def runCommand(command):
         moveDown(currentDir)
 
     elif command == '4':
-        print('Где искать?')
+        print()
         path = os.path.split(os.getcwd())[-1]
         print(countFiles(path))
 
     elif command == '5':
         print('Где искать?')
         path = input()
+        print()
         print(countBytes(path))
 
     elif command == '6':
         print('Введите имя файла.')
         target = input()
+        print()
         path = os.getcwd()
         if not findFiles(target, path, False):
             print('Файл не найден.')
@@ -72,7 +75,6 @@ def runCommand(command):
 def moveUp():
     """
     Function for making the parent directory current.
-    :return: None
     """
     os.chdir('..')
 
@@ -81,15 +83,16 @@ def moveDown(currentDir):
     """
     Function for making the required directory current.
     :param currentDir: a name of the subdirectory
-    :return: None
     """
     if os.path.exists(currentDir):
         if os.path.isdir(os.path.abspath(currentDir)):
             os.chdir(os.path.abspath(currentDir))
         else:
-            print('error')
+            print()
+            print('Ошибка. Вы ввели имя файла.')
     else:
-        print('error')
+        print()
+        print('Ошибка. Такой папки нет.')
 
 
 def countFiles(path):
