@@ -16,13 +16,13 @@ TXT_MENU = '''|  1. Просмотр каталога                   |
 |  7. Выход из программы                  |'''
 TXT_MENU_1 = 'Выберите пункт меню: '
 TXT_END = 'Работа программы завершена.'
-TXT_ONE = '1'
-TXT_TWO = '2'
-TXT_THREE = '3'
-TXT_FOUR = '4'
-TXT_FIVE = '5'
-TXT_SIX = '6'
-TXT_SEVEN = '7'
+TXT_BROWSE = '1'
+TXT_UP = '2'
+TXT_DOWN = '3'
+TXT_QUANTITY = '4'
+TXT_SIZE = '5'
+TXT_SEARCH = '6'
+TXT_EXIT = '7'
 
 
 

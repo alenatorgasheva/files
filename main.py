@@ -8,7 +8,6 @@
 import os
 
 
-
 def acceptCommand():
     """
     Function for input check.
@@ -28,30 +27,30 @@ def runCommand(command):
     Function for running command.
     :param command: command to run
     """
-    if command == lc.TXT_ONE:
+    if command == lc.TXT_BROWSE:
         print()
         startpath = os.getcwd()
         list_files(startpath)
 
-    elif command == lc.TXT_TWO:
+    elif command == lc.TXT_UP:
         moveUp()
 
-    elif command == lc.TXT_THREE:
+    elif command == lc.TXT_DOWN:
         print(lc.TXT_DIR)
         currentDir = input()
         moveDown(currentDir)
 
-    elif command == lc.TXT_FOUR:
+    elif command == lc.TXT_QUANTITY:
         print()
         path = os.path.split(os.getcwd())[-1]
         print(countFiles(path))
 
-    elif command == lc.TXT_FIVE:
+    elif command == lc.TXT_SIZE:
         path = os.getcwd()
         print()
         print(countBytes(path))
 
-    elif command == lc.TXT_SIX:
+    elif command == lc.TXT_SEARCH:
         print(lc.TXT_NAME)
         target = input()
         print()
@@ -59,8 +58,9 @@ def runCommand(command):
         if not findFiles(target, path, False):
             print(lc.TXT_FILE)
 
-    elif command == lc.TXT_SEVEN:
+    elif command == lc.TXT_EXIT:
         pass
+
 
 def list_files(startpath):
     for root, dirs, files in os.walk(startpath):
@@ -71,6 +71,8 @@ def list_files(startpath):
             subindent = ' ' * 4 * (level + 1)
             for f in files:
                 print('{}{}'.format(subindent, f))
+
+
 def moveUp():
     """
     Function for making the parent directory current.
@@ -161,20 +163,23 @@ def findFiles(target, path, search):
     return search
 
 
-def main():
-    # Choosing the language
-    language = input('Choose your language:\n1. English\n2. Russian\n').lower()
-    while True:
-        if language == 'english' or language == 'eng' or \
-                language == 'e' or language == '1':
-            import lc_eng as lc
-            break
-        elif language == 'russian' or language == 'rus' or \
-                language == 'r' or language == '2':
-            import lc_rus as lc
-            break
-        language = input('Please, choose language from proposed: ')
+# Choosing the language
+language = input('Choose your language:\n1. English\n2. Russian\n').lower()
+while True:
+    if language == 'english' or language == 'eng' or \
+            language == 'e' or language == '1':
+        import lc_eng as lc
 
+        break
+    elif language == 'russian' or language == 'rus' or \
+            language == 'r' or language == '2':
+        import lc_rus as lc
+
+        break
+    language = input('Please, choose language from proposed: ')
+
+
+def main():
     MENU = '+' + '-' * 41 + '+' + '\n' + lc.TXT_MENU + '\n' + '+' + '-' * 41 + '+' + '\n' + lc.TXT_MENU_1
 
     while True:
@@ -183,7 +188,7 @@ def main():
         print(MENU)
         command = acceptCommand()
         runCommand(command)
-        if command == lc.TXT_SEVEN:
+        if command == lc.TXT_EXIT:
             print()
             print(lc.TXT_END)
             break
