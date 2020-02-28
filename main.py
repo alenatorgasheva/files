@@ -65,15 +65,26 @@ def moveUp():
 
 def moveDown(currentDir):
     if os.path.exists(currentDir):
-        os.chdir(os.path.abspath(currentDir))
+        if os.path.isdir(os.path.abspath(currentDir)):
+            os.chdir(os.path.abspath(currentDir))
+        else:
+            print('error')
     else:
-        print()
-        print('ERROR')
+        print('error')
 
 
 # TODO (Алина)
 def countFiles(path):
-    pass
+    if os.listdir(path) == []:
+        return 1
+    for brunch in os.listdir(path):
+        if os.path.isfile(os.path.abspath(brunch)):
+            #moveUp()
+            return 1 + countFiles(os.getcwd())
+
+        elif os.path.isdir(os.path.abspath(brunch)):
+            moveDown(brunch)
+            return countFiles(os.getcwd())
 
 
 # TODO (Настя)
