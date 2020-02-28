@@ -74,17 +74,17 @@ def moveDown(currentDir):
 
 
 # TODO (Алина)
-def countFiles(path):
-    if os.listdir(path) == []:
-        return 1
-    for brunch in os.listdir(path):
-        if os.path.isfile(os.path.abspath(brunch)):
-            #moveUp()
-            return 1 + countFiles(os.getcwd())
-
-        elif os.path.isdir(os.path.abspath(brunch)):
-            moveDown(brunch)
-            return countFiles(os.getcwd())
+def findFiles(path):
+  moveUp()
+  return files_list(path, [])
+def files_list(path, lst):
+  for file in os.listdir(path):
+    path_1 = os.path.join(path, file)
+    if os.path.isfile(path_1):
+        lst.append(path_1)
+    else:
+        files_list(path_1, lst)
+  return len(lst)
 
 
 # TODO (Настя)
