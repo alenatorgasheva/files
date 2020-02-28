@@ -8,6 +8,7 @@
 import os
 
 
+
 def acceptCommand():
     """
     Function for input check.
@@ -18,7 +19,7 @@ def acceptCommand():
         command = input()
         if command in correctCommands:
             break
-        print('Ошибка. Введите действие из списка.')
+        print(lc.TXT_ERROR)
     return command
 
 
@@ -27,51 +28,49 @@ def runCommand(command):
     Function for running command.
     :param command: command to run
     """
-    if command == '1':
+    if command == lc.TXT_ONE:
         print()
-        def list_files(startpath):
-            for root, dirs, files in os.walk(startpath):
-                if dir != '.git':
-                    level = root.replace(startpath, '').count(os.sep)
-                    indent = ' ' * 4 * (level)
-                    print('{}{}/'.format(indent, os.path.basename(root)))
-                    subindent = ' ' * 4 * (level + 1)
-                    for f in files:
-                        print('{}{}'.format(subindent, f))
-
         startpath = os.getcwd()
         list_files(startpath)
-    elif command == '2':
+
+    elif command == lc.TXT_TWO:
         moveUp()
 
-    elif command == '3':
-        print('Введите каталог.')
+    elif command == lc.TXT_THREE:
+        print(lc.TXT_DIR)
         currentDir = input()
         moveDown(currentDir)
 
-    elif command == '4':
+    elif command == lc.TXT_FOUR:
         print()
         path = os.path.split(os.getcwd())[-1]
         print(countFiles(path))
 
-    elif command == '5':
-        print('Где искать?')
-        path = input()
+    elif command == lc.TXT_FIVE:
+        path = os.getcwd()
         print()
         print(countBytes(path))
 
-    elif command == '6':
-        print('Введите имя файла.')
+    elif command == lc.TXT_SIX:
+        print(lc.TXT_NAME)
         target = input()
         print()
         path = os.getcwd()
         if not findFiles(target, path, False):
-            print('Файл не найден.')
+            print(lc.TXT_FILE)
 
-    elif command == '7':
+    elif command == lc.TXT_SEVEN:
         pass
 
-
+def list_files(startpath):
+    for root, dirs, files in os.walk(startpath):
+        if dir != '.git':
+            level = root.replace(startpath, '').count(os.sep)
+            indent = ' ' * 4 * (level)
+            print('{}{}/'.format(indent, os.path.basename(root)))
+            subindent = ' ' * 4 * (level + 1)
+            for f in files:
+                print('{}{}'.format(subindent, f))
 def moveUp():
     """
     Function for making the parent directory current.
@@ -89,10 +88,10 @@ def moveDown(currentDir):
             os.chdir(os.path.abspath(currentDir))
         else:
             print()
-            print('Ошибка. Вы ввели имя файла.')
+            print(lc.TXT_ERROR_1)
     else:
         print()
-        print('Ошибка. Такой папки нет.')
+        print(lc.TXT_ERROR_2)
 
 
 def countFiles(path):
@@ -121,13 +120,24 @@ def files_list(path, dirs, files):
             if path_1 not in dirs:
                 dirs.append(path_1)
             files_list(path_1, dirs, files)
-    return 'Количество файлов: ' + str(len(files)) + \
-           '\nКоличество подкаталогов: ' + str(len(dirs)) + \
-           '\nВсего: ' + str(len(dirs) + len(files))
+    return lc.TXT_FILE_1 + str(len(files)) + \
+           lc.TXT_DIR_1 + str(len(dirs)) + \
+           lc.TXT_ALL + str(len(dirs) + len(files))
 
 
 def countBytes(path):
-    pass
+    """
+    Function for calculating the total volume (in bytes) of all files in the pass directory
+    :param path: a directory name
+    :return: volume (in bytes) of all files in the pass directory
+    """
+    size = 0
+    for branch in os.listdir(path):
+        if os.path.isfile(os.path.abspath(branch)) or os.path.isdir(os.path.abspath(branch)):
+            size = os.path.getsize(path)
+        else:
+            countBytes(os.path.getsize(path))
+    return size
 
 
 def findFiles(target, path, search):
@@ -152,13 +162,20 @@ def findFiles(target, path, search):
 
 
 def main():
-    MENU = '+' + '-' * 41 + '+' + '\n' + '''|  1. Просмотр каталога                   |
-|  2. На уровень вверх                    |
-|  3. На уровень вниз                     |
-|  4. Количество файлов и каталогов       |  
-|  5. Размер текущего каталога (в байтах) |
-|  6. Поиск файла                         |
-|  7. Выход из программы                  |''' + '\n' + '+' + '-' * 41 + '+' + '\n' + 'Выберите пункт меню: '
+    # Choosing the language
+    language = input('Choose your language:\n1. English\n2. Russian\n').lower()
+    while True:
+        if language == 'english' or language == 'eng' or \
+                language == 'e' or language == '1':
+            import lc_eng as lc
+            break
+        elif language == 'russian' or language == 'rus' or \
+                language == 'r' or language == '2':
+            import lc_rus as lc
+            break
+        language = input('Please, choose language from proposed: ')
+
+    MENU = '+' + '-' * 41 + '+' + '\n' + lc.TXT_MENU + '\n' + '+' + '-' * 41 + '+' + '\n' + lc.TXT_MENU_1
 
     while True:
         print()
@@ -166,9 +183,9 @@ def main():
         print(MENU)
         command = acceptCommand()
         runCommand(command)
-        if command == '7':
+        if command == lc.TXT_SEVEN:
             print()
-            print('Работа программы завершена.')
+            print(lc.TXT_END)
             break
 
 
