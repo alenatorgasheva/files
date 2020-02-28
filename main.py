@@ -50,7 +50,7 @@ def runCommand(command):
 
     elif command == '4':
         print('Где искать?')
-        path = input()
+        path = os.path.split(os.getcwd())[-1]
         print(countFiles(path))
 
     elif command == '5':
@@ -74,8 +74,7 @@ def moveUp():
     Function for making the parent directory current.
     :return: None
     """
-    root = os.path.split(os.getcwd())[0]
-    os.chdir(root)
+    os.chdir('..')
 
 
 def moveDown(currentDir):
