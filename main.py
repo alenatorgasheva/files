@@ -74,7 +74,7 @@ def moveDown(currentDir):
 
 
 # TODO (Алина)
-def findFiles(path):
+def countFiles(path):
   moveUp()
   return files_list(path, [])
 def files_list(path, lst):
