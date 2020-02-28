@@ -5,18 +5,14 @@
 #              Zemtseva A.       (%),
 #              Torgasheva A.     (%).
 
-# Tasks:
-#  - локализация, комментарии, код ревью, тестирование - Настя
-#  - accept, run - Алёна
-#  - up, down - Алина
-
-# Ready tasks:
-#  - выход
-
 import os
 
 
 def acceptCommand():
+    """
+    Function for input check.
+    :return: correct command
+    """
     correctCommands = ['1', '2', '3', '4', '5', '6', '7']
     while True:
         command = input()
@@ -27,6 +23,10 @@ def acceptCommand():
 
 
 def runCommand(command):
+    """
+    Function for running command.
+    :param command: command to run
+    """
     if command == '1':
         def list_files(startpath):
             for root, dirs, files in os.walk(startpath):
@@ -62,7 +62,8 @@ def runCommand(command):
         print('Введите имя файла.')
         target = input()
         path = os.getcwd()
-        findFiles(target, path)
+        if not findFiles(target, path, False):
+            print('Файл не найден.')
 
     elif command == '7':
         pass
@@ -83,39 +84,48 @@ def moveDown(currentDir):
         print('error')
 
 
-# TODO (Алина)
 def countFiles(path):
-  moveUp()
-  return files_list(path, [], [])
-def files_list(path, lst, lst_files):
-  for file in os.listdir(path):
-    path_1 = os.path.join(path, file)
-    if os.path.isfile(path_1):
-        lst_files.append(path_1)
-    else:
-      if path_1 not in lst:
-        lst.append(path_1)
-      files_list(path_1, lst, lst_files)
-  return 'Количество файлов: '+str(len(lst_files))+ '\nКоличество подкаталогов: '+str(len(lst)) +\
-         '\nВсего: '+str(len(lst)+len(lst_files))
+    moveUp()
+    return files_list(path, [], [])
 
 
-# TODO (Настя)
+def files_list(path, dirs, files):
+    for file in os.listdir(path):
+        path_1 = os.path.join(path, file)
+        if os.path.isfile(path_1):
+            files.append(path_1)
+        else:
+            if path_1 not in dirs:
+                dirs.append(path_1)
+            files_list(path_1, dirs, files)
+    return 'Количество файлов: ' + str(len(files)) + \
+           '\nКоличество подкаталогов: ' + str(len(dirs)) + \
+           '\nВсего: ' + str(len(dirs) + len(files))
+
+
 def countBytes(path):
     pass
 
 
-# TODO (Алёна)
-def findFiles(target, path):
-    for brunch in os.listdir(path):
-        if os.path.isfile(os.path.abspath(brunch)):
-            if brunch == target:
-                print(os.path.abspath(brunch))
+def findFiles(target, path, search):
+    """
+    Function for searching file.
+    :param target: file name
+    :param path: current path
+    :param search: whether a file is found
+    :return: whether a file is found
+    """
+    for name in os.listdir(path):
+        if os.path.isfile(os.path.abspath(name)):
+            if name == target:
+                print(os.path.abspath(name))
+                search = True
 
-        elif os.path.isdir(os.path.abspath(brunch)):
-            moveDown(brunch)
-            findFiles(target, os.getcwd())
+        elif os.path.isdir(os.path.abspath(name)):
+            moveDown(name)
+            findFiles(target, os.getcwd(), search)
             moveUp()
+    return search
 
 
 def main():
