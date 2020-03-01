@@ -1,7 +1,7 @@
 # Case - study #7
 # This program shows information about filing system.
 
-# Developers : Daniel A.         (%),
+# Developers : Daniel A.         (40%),
 #              Zemtseva A.       (%),
 #              Torgasheva A.     (%).
 
