@@ -2,7 +2,7 @@
 # This program shows information about filing system.
 
 # Developers : Daniel A.         (40%),
-#              Zemtseva A.       (%),
+#              Zemtseva A.       (39%),
 #              Torgasheva A.     (41%).
 
 import os
